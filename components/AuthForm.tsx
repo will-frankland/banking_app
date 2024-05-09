@@ -58,7 +58,7 @@ const AuthForm = ({ type }: { type: string }) => {
           address1: data.address1!,
           city: data.city!,
           state: data.state!,
-          zipCode: data.zipCode!,
+          postalCode: data.postalCode!,
           dateOfBirth: data.dateOfBirth!,
           ssn: data.ssn!,
           email: data.email,
@@ -109,11 +109,11 @@ const AuthForm = ({ type }: { type: string }) => {
           </h1>
         </div>
       </header>
-      {/* {user ? ( */}
+      {user ? (
       <div className="flex flex-col gap-4">
         <PlaidLink user={user} variant="primary" />
       </div>
-      {/* ) : ( */}
+      ) : (
       <>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -154,8 +154,8 @@ const AuthForm = ({ type }: { type: string }) => {
                   />
                   <CustomInput
                     control={form.control}
-                    name="zipCode"
-                    label="Zip Code"
+                    name="postalCode"
+                    label="Postal Code"
                     placeholder={"Example: 11101"}
                   />
                 </div>
@@ -217,7 +217,7 @@ const AuthForm = ({ type }: { type: string }) => {
           </Link>
         </footer>
       </>
-      {/* )} */}
+      )}
     </section>
   );
 };
