@@ -69,6 +69,8 @@ const AuthForm = ({ type }: { type: string }) => {
         setUser(newUser);
       }
 
+      console.log()
+
       if (type === "sign-in") {
         const response = await signIn({
           email: data.email,
