@@ -11,7 +11,7 @@ const MyBanks = async () => {
   return (
     <section className='flex'>
       <div className='my-banks'>
-        <HeaderBox title='My Bank Accounts' subtext='Effortlessly maange your banking activities.'/>
+        <HeaderBox title='My Bank Accounts' subtext='Effortlessly maange your banking activities'/>
         <div className='space-y-4'>
           <h2 className='header-2'>
             Your cards
