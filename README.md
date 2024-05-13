@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## About this app
 
-## Getting Started
+Horizon is a banking app that was created with NextJs, Typscript and TailwindCSS. It utilizes Appwrite for its database, Plaid to connect and manage communication between the app and connected accounts as well as Dwolla to process payments.
 
-First, run the development server:
+I also built Sentry into the app which allows for quick debugging as it monitors when the app has failures and can allow me to see a video recording of the user screen (whilst hiding all user info) in order to quickly debug - a very important feature for a banking app.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Many components were built using ShadCN's vast library
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Functionality & Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The site is fully adjustable for screen sizes ranging from mobile to desktop.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+I followed a tutorial created by JavaScriptMastery to become more proficient with TypeScript and NextJs, learn more key principles and best practices in order to expand my portfolio.
 
-## Learn More
+The Horizon Banking App has been deployed on Vercel can be viewed here:
 
-To learn more about Next.js, take a look at the following resources:
+https://banking-lf1rw5po8-willfranklands-projects.vercel.app/sign-in
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- NextJs
+- TypeScript
+- TailwindCSS
+- ShadCN
+- Appwrite
+- Plaid
+- Sentry
+- Dwolla
 
-## Deploy on Vercel
+## Screenshots
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+!["Screenshot of sign-up page"](public/screenshots/Banking_App_SignUp.png)
+!["Screenshot of homepage"](public/screenshots/Homepage_banking.png)
+!["Screenshot of bank connection via Plaid"](public/screenshots/Connect_bank.png)
+!["Screenshot of payment transfer page"](public/screenshots/payment_transfer_page.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm  i`
+### `npm  run dev`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
