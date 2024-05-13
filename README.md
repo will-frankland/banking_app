@@ -29,7 +29,7 @@ https://banking-lf1rw5po8-willfranklands-projects.vercel.app/sign-in
 
 ## Screenshots
 
-!["Screenshot of sign-up page"](public/screenshots/Banking_App_SignUp.png)
+!["Screenshot of sign-up page"](public/screenshots/Banking_App_Sign-up.png)
 !["Screenshot of homepage"](public/screenshots/Homepage_banking.png)
 !["Screenshot of bank connection via Plaid"](public/screenshots/Connect_bank.png)
 !["Screenshot of payment transfer page"](public/screenshots/payment_transfer_page.png)
