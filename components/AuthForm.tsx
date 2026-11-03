@@ -32,6 +32,8 @@ const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   const formSchema = authFormSchema(type);
 
@@ -47,6 +49,7 @@ const AuthForm = ({ type }: { type: string }) => {
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
+    setFormError(null);
 
     try {
       // Sign up with Appwrite & create plaid link token
@@ -64,12 +67,16 @@ const AuthForm = ({ type }: { type: string }) => {
           email: data.email,
           password: data.password,
         };
-        const newUser = await signUp(userData);
+        const result = await signUp(userData);
 
-        setUser(newUser);
+        if (!result?.ok) {
+          setFormError(result?.error || "Sign up failed. Please try again.");
+          return;
+        }
+
+        setNotice(result.warning || null);
+        setUser(result.user);
       }
-
-      console.log()
 
       if (type === "sign-in") {
         const response = await signIn({
@@ -77,10 +84,17 @@ const AuthForm = ({ type }: { type: string }) => {
           password: data.password,
         });
 
-        if (response) router.push("/");
+        if (!response?.ok) {
+          setFormError(response?.error || "Sign in failed. Please try again.");
+          return;
+        }
+
+        router.push("/");
+        router.refresh();
       }
     } catch (error) {
       console.log(error);
+      setFormError("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -113,7 +127,15 @@ const AuthForm = ({ type }: { type: string }) => {
       </header>
       {user ? (
       <div className="flex flex-col gap-4">
+        {notice && (
+          <p className="text-sm text-gray-600" role="status">
+            {notice}
+          </p>
+        )}
         <PlaidLink user={user} variant="primary" />
+        <Link href="/" className="form-link text-center">
+          Continue to dashboard
+        </Link>
       </div>
       ) : (
       <>
@@ -190,6 +212,11 @@ const AuthForm = ({ type }: { type: string }) => {
               placeholder={"Enter your password"}
             />
             <div className="flex flex-col gap-4">
+              {formError && (
+                <p className="text-sm font-medium text-red-500" role="alert">
+                  {formError}
+                </p>
+              )}
               <Button type="submit" className="form-btn" disabled={isLoading}>
                 {isLoading ? (
                   <>
@@ -213,7 +240,7 @@ const AuthForm = ({ type }: { type: string }) => {
           </p>
           <Link
             className="form-link"
-            href={type === "sign-in" ? "/sign-up" : "sign-in"}
+            href={type === "sign-in" ? "/sign-up" : "/sign-in"}
           >
             {type === "sign-in" ? "Sign Up" : "Sign In"}
           </Link>
