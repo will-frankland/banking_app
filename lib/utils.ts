@@ -78,6 +78,18 @@ export function formatAmount(amount: number): string {
 
 export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
 
+export function getErrorMessage(error: unknown) {
+  const message =
+    error instanceof Error
+      ? error.message
+      : "Something went wrong. Please try again.";
+  const cleaned = message.replace(/\s+/g, " ").trim();
+
+  if (!cleaned) return "Something went wrong. Please try again.";
+
+  return cleaned.slice(0, 300);
+}
+
 export const removeSpecialCharacters = (value: string) => {
   return value.replace(/[^\w\s]/gi, "");
 };

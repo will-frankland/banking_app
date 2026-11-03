@@ -4,30 +4,33 @@ import TransactionsTable from "@/components/TransactionsTable";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { formatAmount } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 const TransactionHistory = async ({
   searchParams: { id, page },
 }: SearchParamProps) => {
   const currentPage = Number(page as string) || 1;
   const loggedIn = await getLoggedInUser();
+  if (!loggedIn) redirect("/sign-in");
+
   const accounts = await getAccounts({ userId: loggedIn.$id });
-
-  if (!accounts) return;
-
-  const accountsData = accounts?.data;
+  const accountsData = accounts?.data ?? [];
   const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId;
-  const account = await getAccount({ appwriteItemId });
+  const account = appwriteItemId
+    ? await getAccount({ appwriteItemId })
+    : null;
 
   const rowsPerPage = 10;
-  const totalPages = Math.ceil(account?.transactions.length / rowsPerPage);
+  const totalPages = Math.ceil((account?.transactions?.length ?? 0) / rowsPerPage);
 
   const indexOfLastTransaction = currentPage * rowsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
 
-  const currentTransactions = account?.transactions.slice(
-    indexOfFirstTransaction,
-    indexOfLastTransaction
-  );
+  const currentTransactions =
+    account?.transactions?.slice(
+      indexOfFirstTransaction,
+      indexOfLastTransaction
+    ) ?? [];
 
   return (
     <div className="transactions">
@@ -51,7 +54,7 @@ const TransactionHistory = async ({
           <div className="transactions-account-balance">
             <p className="text-14">Current Balance</p>
             <p className="text-24 text-center font-bold">
-              {formatAmount(account?.data.currentBalance)}
+              {formatAmount(account?.data.currentBalance ?? 0)}
             </p>
           </div>
         </div>

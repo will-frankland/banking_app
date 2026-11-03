@@ -2,14 +2,26 @@ import HeaderBox from '@/components/HeaderBox'
 import PaymentTransferForm from '@/components/PaymentTransferForm'
 import { getAccounts } from '@/lib/actions/bank.actions';
 import { getLoggedInUser } from '@/lib/actions/user.actions';
+import { redirect } from 'next/navigation';
 import React from 'react'
 
 const Transfer = async () => {
   const loggedIn = await getLoggedInUser();
-  const accounts = await getAccounts({ userId: loggedIn.$id });
+  if (!loggedIn) redirect('/sign-in');
 
-  if (!accounts) return;
-  const accountsData = accounts?.data;
+  const accounts = await getAccounts({ userId: loggedIn.$id });
+  const accountsData = accounts?.data ?? [];
+
+  if (!accountsData.length) {
+    return (
+      <section className='payment-transfer'>
+        <HeaderBox
+          title="Payment Transfer"
+          subtext='Link a bank account before making a transfer'
+        />
+      </section>
+    );
+  }
 
   return (
     <section className='payment-transfer'>
